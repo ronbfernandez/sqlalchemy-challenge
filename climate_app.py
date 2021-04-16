@@ -114,6 +114,18 @@ def temperature():
     # Close the Query
     session.close()
 
-    
+    # Convert list of tuples into normal list
+    temperature_list = list(np.ravel(temperature_results))
+
+    # Jsonify summary
+    return jsonify(temperature_list)
+
+""" * Return a JSON list of the minimum temperature, the average temperature, and the max temperature for a given start or start-end range.
+        * When given the start only, calculate TMIN, TAVG, and TMAX for all dates greater than and equal to the start date.
+        * When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive."""
+
+
+
+
 
 
