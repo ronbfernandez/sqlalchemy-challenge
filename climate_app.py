@@ -124,6 +124,47 @@ def temperature():
         * When given the start only, calculate TMIN, TAVG, and TMAX for all dates greater than and equal to the start date.
         * When given the start and the end date, calculate the TMIN, TAVG, and TMAX for dates between the start and end date inclusive."""
 
+@app.route("/api/v1.0/<start>")
+def single_date(start):
+    # Set up for user to enter date
+    Start_Date = dt.datetime.strptime(start,"%Y-%m-%d")
+
+    #Query Min, Max, and Avg based on date
+    summary_stats = session.query(func.min(Measurement.tobs),func.max(Measurement.tobs),func.round(func.avg(Measurement.tobs))).\
+    filter(Measurement.date >= Start_Date).all()
+
+    #Close the Query
+    session.close()
+
+    summary = list(np.ravel(summary_stats))
+
+    # Jsonify summary
+    return jsonify(summary)
+
+# Same as above with the inclusion of an end date
+@app.route("/api/v1.0/<start>/<end>")
+def trip_dates(start,end):
+    # Setup for user to enter dates
+    Start_Date = dt.datetime.strptime(start, "%Y-%m-%d")
+    End_Date = dt.datetime.strptime(end,"%Y-%m-%d")
+
+    # Query Min, Max, and Avg based on dates
+    summary_stats = session.query(func.min(Measurement.tobs),func.max(Measurement.tobs),func.round(func.avg(Measurement.tobs))).\
+    filter(Measurement.date.between(Start_Date,End_Date)).all()
+
+    # Close the Query
+    session.close()
+
+    summary = list(np.ravel(summary_stats))
+
+    # Jsonify summary
+    return jsonify(summary)
+
+if__name__ == "__main__":
+    app.run(debug=True)
+
+
+
 
 
 
