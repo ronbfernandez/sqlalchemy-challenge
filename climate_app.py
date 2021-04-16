@@ -19,7 +19,7 @@ from flask import Flask, redirect, jsonify
 # Database Setup
 #######################
 
-# Creatse connection the sqllite
+# Create connection the sqllite
 
 engine = create_engine("sqlite:///hawaii.sqlite")
 
@@ -56,7 +56,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     print("Server received request for 'Home' page.")
-    return("Welcome to the Surfs Up Weather API!<br><br>"
+    return ("Welcome to the Surfs Up Weather API!<br><br>"
          f"Available Routes:<br>"
          f"/api/v1.0/precipitation<br>"
          f"/api/v1.0/Station<br>"
@@ -81,12 +81,12 @@ def precipitation():
             year_prcp_dict = {}
             year_prcp_dict["date"] = result.date
             year_prcp_dict["prcp"] = result.prcp
-            year_prcp.append(year_prcp_dict_)
+            year_prcp.append(year_prcp_dict)
 
         # Jsonify summary
         return jsonify(year_prcp)
 
-""" * Return a JSONlist of stations from the dataset."""
+""" * Return a JSON list of stations from the dataset."""
 @app.route("/api/v1.0/Station")
 def stations():
     """Return a list of all station names"""
@@ -101,7 +101,7 @@ def stations():
     # Jsonify summary
     return jsonify(all_station)
 
-""" * query for the dates and temperature observations from a year from the last data point.
+""" * Query the dates and temperature observations of the most active station for the last year of data.
         * Return a JSON list of Temperature Observations (tobs) for the previous year."""
 @app.route("/api/v1.0/tobs")
 def temperature():
@@ -160,7 +160,7 @@ def trip_dates(start,end):
     # Jsonify summary
     return jsonify(summary)
 
-if__name__ == "__main__":
+if __name__ == "__main__":
     app.run(debug=True)
 
 
